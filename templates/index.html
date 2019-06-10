@@ -4,7 +4,30 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-holis
+<body bgcolor="#7fffd4">
+{% load static %}
+<div>
+    <h1 align="center">Movies</h1>
+    <form method="get">
+        {% csrf_token %}
+        <div>
+            <input type="search" id="miBusqueda" name="q">
+            <button type="submit">Buscar</button>
+        </div>
+    </form>
+    <form method="get">
+    <a><button type="submit" name="Cl" value="15 años en adelante">clasificacion B</button></a>
+    </form>
+</div>
+<div >
+    {% if movies != 'no se encontraron conicidencias' %}
+      {% for movie in movies %}
+        <a href="{% url 'shearch' movie.pk %}"><img  src="media/{{ movie.poster }}" width=200px height=300px>
+        </a>
+        {% endfor %}
+    {% else %}
+        <a><h1>{{ movies }}</h1></a>
+     {% endif %}
+</div>
 </body>
 </html>

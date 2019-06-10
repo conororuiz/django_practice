@@ -7,9 +7,15 @@ class MovieDirector(models.Model):
     name = models.CharField(max_length=50)
     age = models.IntegerField()
 
+    def __str__(self):
+        return self.name
+
 class Actor(models.Model):
     name = models.CharField(max_length=50)
     age = models.IntegerField()
+
+    def __str__(self):
+        return self.name
 
 class Movie(models.Model):
     title = models.CharField(max_length=70)
@@ -17,17 +23,25 @@ class Movie(models.Model):
     year = models.IntegerField()
     poster = models.ImageField()
     detail = models.TextField()
+    classification = models.CharField(max_length=5,choices=[("A","para todo publico"),("B","12 años en adelante"),("B15","15 años en adelante"),("C","18 años en adelante"),("D","para adultos")])
     trailer_url = models.URLField()
     directors = models.ForeignKey(MovieDirector,on_delete=models.CASCADE)
     actors = models.ForeignKey(Actor,on_delete=models.CASCADE)
-    genre = models.CharField(max_length=20)
-    rating = models.IntegerField()
+    genre = models.CharField(max_length=20 , default=None)
+    rating = models.FloatField()
     original_language = models.CharField(max_length=20)
     release_date = models.DateField()
     country = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.title
+
 
 class MovieRate(models.Model):
     movie = models.ForeignKey(Movie,on_delete=models.CASCADE)
-    user = models.ForeignKey(User,null=True, on_delete=models.SET_NULL)
+    users = models.ForeignKey(User,null=True, on_delete=models.SET_NULL)
+    rate =models.FloatField(default=0.0)
     comment = models.TextField()
+    def __int__(self):
+        return self.users
+

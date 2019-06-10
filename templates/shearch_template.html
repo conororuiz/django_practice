@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="0" cellspacing="0" cellpadding="0">
+    <tbody>
+    <tr>
+        <td style="padding-left:0px"><img src="{{ movies.poster.url }}" alt="" width="420"
+                                          height="600" class="alignnone size-full wp-image-15649"></td>
+        <td style="text-align:justify"><p> {{ movies.detail }}</p>
+            <p>&nbsp;</p>
+            <p><span><strong>Title: </strong> {{ movies.title }}</span></p>
+            <div id="imdb-box"><strong>IMDb:</strong>
+                <div id="star-rating-box">
+                </div> &nbsp;{{ movies.rating }}
+            </div>
+
+            <br><span><strong> Genre: </strong><a>{{ movies.genre }}</a>
+            </span><br> <span><strong>Original Language: </strong>{{ movies.original_language }}</span><br>
+                <span><strong>Director: </strong>{{ movies.directors }}</span><br>
+                <span><strong>Actors: </strong><a >{{ movies.actors }}</a></span></br>
+                <span><strong>Duration: </strong><a >{{ movies.duration }}</a>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
