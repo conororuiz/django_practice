@@ -17,12 +17,12 @@
                 <div id="star-rating-box">
                 </div> &nbsp;{{ rate.rate }}
             </div>
-
+            <a href="{% url 'rate' %}">Rate this</a>
             <br><span><strong> Genre: </strong><a>{{ movie.genre }}</a>
             </span><br> <span><strong>Original Language: </strong>{{ movie.original_language }}</span><br>
                 <span><strong>Director: </strong>{{ movie.directors }}</span><br>
                 <span><strong>Actors: </strong><a >{{ movie.actors }}</a></span></br>
-                <span><strong>Duration: </strong><a >{{ movie.duration|date:"G:i:s" }}</a>
+            <span><strong>Duration: </strong><a >{{ movie.duration|date:"G:i:s" }}</a></span>
 
         </td>
     </tr>

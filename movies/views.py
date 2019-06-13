@@ -1,6 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render
-from django.views.generic import ListView ,DetailView , View
+from django.views.generic import ListView, DetailView, View, FormView, CreateView
+
+from movies.forms import MovieForm, MovieRateForm
 from movies.models import *
 
 
@@ -57,15 +60,25 @@ class MovieDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         data = super(MovieDetailView, self).get_context_data(**kwargs)
         rate=MovieRate.objects.get_rated(self.get_object().id)
-        rate =rate[0]
+        if rate[0]:
+          rate =rate[0]
+        else:
+          rate=float(0.0)
         data.update({'rate':rate })
         return data
 
-""""
-class MovieDetails(View):
-    def get(self,request, pk):
-        pel=int(pk)
-        movie=Movie.objects.get(id=pel)
-        rate=MovieRate.objects.get_rated(pel)
-        context={'movies':movie,'rate':rate}
-        return render(request,'shearch_template.html',context) """
+class Login(LoginView):
+     template_name = 'login.html'
+
+
+class MovieView(CreateView):
+    model = Movie
+    form_class = MovieForm
+    template_name = 'create_movie.html'
+    success_url = 'home'
+
+class MovieRateView(CreateView):
+    model = MovieRate
+    form_class = MovieRateForm
+    template_name = 'rate.html'
+    success_url = 'home'

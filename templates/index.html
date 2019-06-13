@@ -7,11 +7,12 @@
     <title>Title</title>
 </head>
 {% load static %}
-<body background="static/movies/sala-de-cine.png" style="background-size: contain" >
+<body background="static/movies/sala-de-cine.png" style="background-size: 101%;padding-bottom: 1468px;" >
 <div>
 <nav style="background-color: black">
     <ul class="menu">
          <form class="form-inline" method="get" style="float: right">
+             <a href="{% url 'create' %}" style="padding-right: 20px"><buton class="btn btn-outline-light">Create movie</buton></a>
         {% csrf_token %}
             <a  style="alignment: right">
             <input  type="search" id="miBusqueda" name="q" >
