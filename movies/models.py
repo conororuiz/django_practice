@@ -8,24 +8,24 @@ from django.utils.text import slugify
 User = get_user_model()
 
 class MovieDirector(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=150)
     age = models.IntegerField()
 
     def __str__(self):
         return self.name
 
 class Actor(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=150)
     age = models.IntegerField()
 
     def __str__(self):
         return self.name
 
 class Movie(models.Model):
-    title = models.CharField(max_length=70)
-    duration = models.TimeField()
+    title = models.CharField(max_length=200)
+    duration = models.IntegerField(null=True)
     year = models.IntegerField()
-    poster = models.ImageField()
+    poster = models.ImageField(max_length=200)
     detail = models.TextField()
     classification = models.CharField(max_length=5,choices=[("A","para todo publico"),("B","12 años en adelante"),("B15","15 años en adelante"),("C","18 años en adelante"),("D","para adultos")])
     trailer_url = models.URLField()
@@ -34,9 +34,9 @@ class Movie(models.Model):
     genre = models.CharField(max_length=20 , default=None)
     rating = models.FloatField()
     original_language = models.CharField(max_length=20)
-    release_date = models.DateField()
+    release_date = models.DateField(null=True)
     country = models.CharField(max_length=20)
-    slug=models.CharField(max_length=70 , null=True , blank=True)
+    slug=models.CharField(max_length=200 , null=True , blank=True)
 
     def __str__(self):
         return self.title

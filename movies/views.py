@@ -8,9 +8,8 @@ from movies.models import *
 
 
 class HomeTemplate(ListView):
-
     def get(self,request, *args, **kwargs):
-            movie = Movie.objects.all()
+            movie = Movie.objects.all().order_by('-id')[:10]
             best_movie = MovieRate.objects.get_best_rated().first()
             best_movie_rate=Movie.objects.get(pk=best_movie.get('movie'))
             rate = best_movie['rate']
@@ -60,7 +59,7 @@ class MovieDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         data = super(MovieDetailView, self).get_context_data(**kwargs)
         rate=MovieRate.objects.get_rated(self.get_object().id)
-        if rate[0]:
+        if rate:
           rate =rate[0]
         else:
           rate=float(0.0)
