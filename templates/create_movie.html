@@ -8,7 +8,7 @@
 </head>
 <body>
 {% block body %}
-<form method="post" style="background-color: white" enctype="multipart/form-data">
+<form method="post" style="background-color: white">
 {% csrf_token %}
 {{ form.as_p }}
 <button type="submit">SAVE</button>

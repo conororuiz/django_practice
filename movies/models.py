@@ -31,11 +31,11 @@ class Movie(models.Model):
     trailer_url = models.URLField()
     directors = models.ForeignKey(MovieDirector,on_delete=models.CASCADE)
     actors = models.ForeignKey(Actor,on_delete=models.CASCADE)
-    genre = models.CharField(max_length=20 , default=None)
+    genre = models.CharField(max_length=100 , default=None)
     rating = models.FloatField()
-    original_language = models.CharField(max_length=20)
+    original_language = models.CharField(max_length=100)
     release_date = models.DateField(null=True)
-    country = models.CharField(max_length=20)
+    country = models.CharField(max_length=100)
     slug=models.CharField(max_length=200 , null=True , blank=True)
 
     def __str__(self):
@@ -59,4 +59,8 @@ class MovieRate(models.Model):
 
     def __int__(self):
         return self.users
+
+class Token(models.Model):
+    user=models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    token=models.CharField(max_length=80)
 

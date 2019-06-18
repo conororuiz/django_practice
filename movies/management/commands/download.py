@@ -81,10 +81,10 @@ class Command(BaseCommand):
                           pass
                       else:
                           try:
-                           os.mkdir(settings.MEDIA_ROOT+"/movie/"+movie_title+dir)
+                           os.mkdir(settings.MEDIA_ROOT+"/movie/"+movie_title)
                           except:
                               print("la pelicula ya existe")
-                          poster_name=settings.MEDIA_ROOT+"/movie/"+movie_title+dir+"/"+movie_title+"."+ext
+                          poster_name=settings.MEDIA_ROOT+"/movie/"+movie_title+"/"+movie_title+"."+ext
                           f = open(poster_name, "wb")
                           try:
                             response = requests.get(response)
@@ -92,8 +92,8 @@ class Command(BaseCommand):
                           except:
                             poster_name="prueba"
                           f.close()
-                          poster_name="movie/"+movie_title+dir+"/"+movie_title+"."+ext
-                          actors=Actor.objects.create(name=Actor,age=0)
+                          poster_name="movie/"+movie_title+"/"+movie_title+"."+ext
+                          actors=Actor.objects.create(name=actors,age=0)
                           director=MovieDirector.objects.create(name=director,age=0)
                           Movie.objects.create(title=movie_title, duration=duration, poster=poster_name, detail=detail,
                                                genre=genre, original_language=language,
