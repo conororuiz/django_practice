@@ -5,7 +5,7 @@ from movies.models import MovieRate, Movie
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    slug = serializers.HyperlinkedIdentityField(view_name='drf-movie-detail',lookup_field='slug')
+    id = serializers.HyperlinkedIdentityField(view_name='api-movies:movie-detail-actions',lookup_field='pk')
     class Meta:
         model = Movie
         fields ='__all__'

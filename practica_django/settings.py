@@ -26,7 +26,7 @@ SECRET_KEY = 'p6zwq2d8+#l6zn!4=3_4@misyx(9$b34g89$71io%ae!s-%mn*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'movies.middleware.SimpleMiddleware'
 ]
 
 ROOT_URLCONF = 'practica_django.urls'
@@ -118,7 +119,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+API_VERSION = 'v1'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -129,3 +130,4 @@ STATICFILES_DIRS = [
 ]
 LOGIN_REDIRECT_URL="home"
 LOGOUT_REDIRECT_URL="login"
+

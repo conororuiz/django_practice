@@ -61,6 +61,6 @@ class MovieRate(models.Model):
         return self.users
 
 class Token(models.Model):
-    user=models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    user=models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     token=models.CharField(max_length=80)
 

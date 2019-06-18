@@ -20,7 +20,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('movies.urls'))
+    path('',include('movies.urls')),
+    path(f'api/{settings.API_VERSION}/', include(('movies.api.urls', 'movies.api'), namespace='api-movies')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -1,7 +1,11 @@
+from builtins import super
+import secrets
+
+from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core import management
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, View, FormView, CreateView
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, ListCreateAPIView, \
@@ -74,6 +78,14 @@ class DetailMovieView(LoginRequiredMixin, DetailView):
 class Login(LoginView):
      template_name = 'login.html'
 
+     def form_valid(self, form):
+         context = super(Login,self).form_valid(form)
+         try:
+            token = Token.objects.get(user=self.request.user.pk)
+         except:
+            token =Token.objects.create(user=self.request.user, token=secrets.token_hex(10))
+         return context
+
 class MovieView(CreateView):
     model = Movie
     form_class = MovieForm
@@ -124,7 +136,12 @@ class MovieRateDetailView(RetrieveAPIView):
     serializer_class = MovieRateSerializer
 
 class LogOutView(LogoutView):
-    pass
+
+    def dispatch(self, request, *args, **kwargs):
+        Token.objects.get(user=self.request.user.pk).delete()
+
+        logout(request)
+        return super(LogOutView,self).dispatch(request, *args, **kwargs)
 
 
 
