@@ -1,6 +1,6 @@
 from builtins import super
 import secrets
-
+from rest_framework.authtoken.models import Token
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
@@ -13,7 +13,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView,
 
 from movies.api.serializers import MovieSerializer, MovieRateSerializer
 from movies.forms import MovieForm, MovieRateForm, InsertMovieForm
-from movies.models import *
+from movies.models import MovieRate, Movie
 
 
 class HomeTemplate(ListView):
@@ -81,9 +81,9 @@ class Login(LoginView):
      def form_valid(self, form):
          context = super(Login,self).form_valid(form)
          try:
-            token = Token.objects.get(user=self.request.user.pk)
+            Token.objects.get(user=self.request.user.pk)
          except:
-            token =Token.objects.create(user=self.request.user, token=secrets.token_hex(10))
+            Token.objects.create(user=self.request.user)
          return context
 
 class MovieView(CreateView):
@@ -138,8 +138,10 @@ class MovieRateDetailView(RetrieveAPIView):
 class LogOutView(LogoutView):
 
     def dispatch(self, request, *args, **kwargs):
-        Token.objects.get(user=self.request.user.pk).delete()
-
+        try:
+          Token.objects.get(user=self.request.user.pk).delete()
+        except:
+            return redirect('login')
         logout(request)
         return super(LogOutView,self).dispatch(request, *args, **kwargs)
 

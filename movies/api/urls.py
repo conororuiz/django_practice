@@ -1,10 +1,9 @@
 from django.urls import path
+from rest_framework.routers import SimpleRouter
+from movies.api.viewsets import MovieViewset, MovieRateViewset
 
-from movies.api.viewsets import AccountViewSet
+router = SimpleRouter()
+router.register('movie', MovieViewset)
+router.register('movierate', MovieRateViewset)
 
-urlpatterns = [
-    path('movie/', AccountViewSet.as_view({'get': 'list', 'post': 'create'}), name='movie-list-actions'),
-    path('movie/<int:pk>/',
-          AccountViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy', 'patch': 'partial_update'}),
-         name='movie-detail-actions'),
-]
+urlpatterns = router.urls

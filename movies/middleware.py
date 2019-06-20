@@ -15,6 +15,8 @@ class SimpleMiddleware:
                request.user=token.user
             except:
                     return redirect('login')
+        elif request.user.is_authenticated and request.META.get('PATH_INFO') in [reverse('login')]:
+              return redirect('home')
         response = self.get_response(request)
 
         return response

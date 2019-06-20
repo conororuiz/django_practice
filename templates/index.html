@@ -13,7 +13,7 @@
     <ul class="menu">
          <form class="form-inline" method="get" style="float: right">
               <a href="{% url 'logout' %}" style="padding-right: 322px"><buton class="btn btn-outline-light">Logout</buton></a>
-             <a href="{% url 'drf-movie-list' %}" style="padding-right: 20px"><buton class="btn btn-outline-light">API</buton></a>
+             <a href="{% url 'api-movies:movie-list' %}" style="padding-right: 20px"><buton class="btn btn-outline-light">API</buton></a>
              <a href="{% url 'create' %}" style="padding-right: 20px"><buton class="btn btn-outline-light">Add movies</buton></a>
         {% csrf_token %}
             <a  style="alignment: right">

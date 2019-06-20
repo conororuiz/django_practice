@@ -1,28 +1,27 @@
 from django.urls import reverse
 from rest_framework import serializers
+from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.serializers import ModelSerializer
 
 from movies.models import MovieRate, Movie
 
 
-class MovieSerializer(serializers.ModelSerializer):
-    id = serializers.HyperlinkedIdentityField(view_name='api-movies:movie-detail-actions',lookup_field='pk')
+class MovieSerializer(ModelSerializer):
+    id = serializers.HyperlinkedIdentityField(view_name='api-movies:movie-detail', lookup_field='pk')
+
     class Meta:
         model = Movie
-        fields ='__all__'
-
-    def get_movie_rate(self, obj):
-        rates = MovieRate.objects.get_rate_for_movie(obj)
-        if rates.exists():
-            return rates.first()['rate']
-
-        return ''
+        fields = '__all__'
+    permission_classes = [DjangoModelPermissions, ]
 
 
-class MovieRateSerializer(serializers.ModelSerializer):
-    id = serializers.HyperlinkedIdentityField(view_name='drf-movierate-detail')
-    user = serializers.StringRelatedField()
-    movie = serializers.HyperlinkedRelatedField(read_only=True, view_name='drf-movie-detail', lookup_field='slug')
+
+class MovieRateSerializer(ModelSerializer):
+    pk = serializers.IntegerField(source='id', read_only=True)
+    users = serializers.StringRelatedField()
+    movie = MovieSerializer(read_only=True)
+    comment = serializers.CharField()
 
     class Meta:
         model = MovieRate
-        fields = ('movie', 'user', 'rate', 'id')
+        fields = ('movie', 'users', 'comment', 'rate', 'pk')
