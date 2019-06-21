@@ -1,5 +1,7 @@
 from builtins import super
 import secrets
+
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -10,7 +12,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, View, FormView, CreateView
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, ListCreateAPIView, \
     RetrieveUpdateDestroyAPIView
-
+from rest_framework import filters, generics
 from movies.api.serializers import MovieSerializer, MovieRateSerializer
 from movies.forms import MovieForm, MovieRateForm, InsertMovieForm
 from movies.models import MovieRate, Movie
@@ -144,7 +146,6 @@ class LogOutView(LogoutView):
             return redirect('login')
         logout(request)
         return super(LogOutView,self).dispatch(request, *args, **kwargs)
-
 
 
 

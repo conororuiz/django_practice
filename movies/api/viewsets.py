@@ -1,4 +1,5 @@
-from rest_framework import viewsets
+
+from rest_framework import viewsets, filters
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -18,6 +19,8 @@ class MovieViewset(viewsets.ModelViewSet):
         'rate': MovieRateSerializer,
         'default': MovieSerializer
     }
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('title', 'genre','year','original_language')
 
     def get_serializer_class(self):
         return self.serializer_classes[self.action] if self.action in self.serializer_classes.keys() else \
@@ -36,3 +39,5 @@ class MovieViewset(viewsets.ModelViewSet):
             serializer.save(movie=obj, users=request.user)
 
         return Response(data=self.get_serializer(serializer.instance).data)
+
+

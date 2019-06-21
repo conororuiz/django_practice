@@ -1,4 +1,5 @@
 from django.urls import reverse
+from django.views import generic
 from rest_framework import serializers
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.serializers import ModelSerializer
@@ -25,3 +26,4 @@ class MovieRateSerializer(ModelSerializer):
     class Meta:
         model = MovieRate
         fields = ('movie', 'users', 'comment', 'rate', 'pk')
+
