@@ -14,52 +14,39 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView,
     RetrieveUpdateDestroyAPIView
 from rest_framework import filters, generics
 from movies.api.serializers import MovieSerializer, MovieRateSerializer
+from movies.filters import  search_movies
 from movies.forms import MovieForm, MovieRateForm, InsertMovieForm
 from movies.models import MovieRate, Movie
 
 
 class HomeTemplate(ListView):
     def get(self,request, *args, **kwargs):
+          if Movie.objects.all().order_by('-id')[:10]:
             movie = Movie.objects.all().order_by('-id')[:10]
-            best_movie = MovieRate.objects.get_best_rated().first()
-            best_movie_rate=Movie.objects.get(pk=best_movie.get('movie'))
-            rate = best_movie['rate']
-            if self.request.GET.get('q') != None:
-               return self.shearchmovie(request)
-            contex = {'movies': movie,'best_movie': best_movie_rate , 'movie_rate':rate, }
-            return render(request,'index.html', contex)
+            if MovieRate.objects.get_best_rated().first():
+                best_movie = MovieRate.objects.get_best_rated().first()
+                best_movie_rate=Movie.objects.get(pk=best_movie.get('movie'))
+                rate = best_movie['rate']
+                if self.request.GET.get('q') != None:
+                   return self.shearchmovie(request)
+                contex = {'movies': movie,'best_movie': best_movie_rate , 'movie_rate':rate, }
+                return render(request,'index.html', contex)
+            else:
+                if self.request.GET.get('q') != None:
+                   return self.shearchmovie(request)
+                contex = {'movies': movie,}
+                return render(request,'index.html', contex)
+          else:
+              if self.request.GET.get('q') != None:
+                  return self.shearchmovie(request)
+              contex = {}
+              return render(request, 'index.html', contex)
 
     def shearchmovie(self,request):
-            busqueda = self.request.GET.get('q')
-            num = 0
-            try:
-                num = int(busqueda)
-            except:
-                pass
-            if busqueda == None or busqueda == "":
-                movie = Movie.objects.all()
-                contex = {'movies': movie}
-            elif Movie.objects.filter(title__icontains=busqueda):
-                movie = Movie.objects.filter(title__icontains=busqueda)
-                contex = {'movies': movie, }
-            elif Movie.objects.filter(classification__icontains=busqueda):
-                movie = Movie.objects.filter(classification__icontains=busqueda)
-                contex = {'movies': movie}
-            elif Movie.objects.filter(genre__icontains=busqueda):
-                movie = Movie.objects.filter(genre__icontains=busqueda)
-                contex = {'movies': movie}
-            elif Movie.objects.filter(actors__name__icontains=busqueda):
-                movie = Movie.objects.filter(actors__name__icontains=busqueda)
-                contex = {'movies': movie}
-            elif Movie.objects.filter(directors__name__icontains=busqueda):
-                movie = Movie.objects.filter(directors__name__icontains=busqueda)
-                contex = {'movies': movie}
-            elif Movie.objects.filter(year=num):
-                movie = Movie.objects.filter(year=num)
-                contex = {'movies': movie}
-            else:
-                contex = {'movies': 'no se encontraron conicidencias'}
-            return render(request,'movies.html', contex)
+        busqueda = self.request.GET.get('q')
+        contex=search_movies(busqueda)
+        return render(request, 'movies.html', contex)
+
 
 class DetailMovieView(LoginRequiredMixin, DetailView):
     queryset = Movie.objects.all()
@@ -146,6 +133,3 @@ class LogOutView(LogoutView):
             return redirect('login')
         logout(request)
         return super(LogOutView,self).dispatch(request, *args, **kwargs)
-
-
-
