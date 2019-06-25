@@ -14,7 +14,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView,
     RetrieveUpdateDestroyAPIView
 from rest_framework import filters, generics
 from movies.api.serializers import MovieSerializer, MovieRateSerializer
-from movies.filters import  search_movies
+from movies.filters import MovieFilter
 from movies.forms import MovieForm, MovieRateForm, InsertMovieForm
 from movies.models import MovieRate, Movie
 
@@ -27,25 +27,25 @@ class HomeTemplate(ListView):
                 best_movie = MovieRate.objects.get_best_rated().first()
                 best_movie_rate=Movie.objects.get(pk=best_movie.get('movie'))
                 rate = best_movie['rate']
-                if self.request.GET.get('q') != None:
+                if self.request.GET.get('title') != None:
                    return self.shearchmovie(request)
                 contex = {'movies': movie,'best_movie': best_movie_rate , 'movie_rate':rate, }
                 return render(request,'index.html', contex)
             else:
-                if self.request.GET.get('q') != None:
+                if self.request.GET.get('title') != None:
                    return self.shearchmovie(request)
                 contex = {'movies': movie,}
                 return render(request,'index.html', contex)
           else:
-              if self.request.GET.get('q') != None:
+              if self.request.GET.get('title') != None:
                   return self.shearchmovie(request)
               contex = {}
               return render(request, 'index.html', contex)
 
     def shearchmovie(self,request):
-        busqueda = self.request.GET.get('q')
-        contex=search_movies(busqueda)
-        return render(request, 'movies.html', contex)
+        movie_list = Movie.objects.all()
+        movie_filter = MovieFilter(request.GET, queryset=movie_list)
+        return render(request, 'movies.html',{'movies': movie_filter})
 
 
 class DetailMovieView(LoginRequiredMixin, DetailView):

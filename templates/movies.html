@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body background="static/movies/sala-de-cine.png" style="background-size: 101%;
+<body background="/static/movies/sala-de-cine.png" style="background-size: 101%;
     padding-bottom: 2278px;">
 <div>
 <nav style="background-color: black ; ">
@@ -16,9 +16,8 @@
          <form class="form-inline" method="get" style="float: right">
              <a href="{% url 'logout' %}" style="padding-right: 448px"><buton class="btn btn-outline-light">Logout</buton></a>
              <a href="{% url 'home' %}" style="padding-right: 20px"><buton class="btn btn-outline-light">Home</buton></a>
-        {% csrf_token %}
             <a  style="alignment: right">
-            <input  type="search" id="miBusqueda" name="q">
+            <input  type="search" id="miBusqueda" name="title">
             <button id="button" class="btn btn-outline-light"  type="submit">Search</button>
             </a>
 
@@ -31,7 +30,7 @@
 <div class="table" style="padding-top: 60px">
     {% if movies != 'no se encontraron conicidencias' %}
      <form class="container">
-      {% for movie in movies %}
+      {% for movie in movies.qs %}
         <div style="display: inline-block">
         <a href="{% url 'search' movie.slug %}">
             <div style="background-image: url({{ movie.poster.url }}); width: 200px; height: 300px;background-size: cover;">
