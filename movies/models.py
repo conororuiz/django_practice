@@ -64,3 +64,8 @@ class Token(models.Model):
     user=models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     token=models.CharField(max_length=80)
 
+
+
+class Suggests(models.Model):
+    title = models.CharField(max_length=100)
+

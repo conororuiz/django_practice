@@ -14,8 +14,9 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView,
 from movies.api.serializers import MovieSerializer, MovieRateSerializer
 from movies.filters import MovieFilter
 from movies.forms import MovieForm, MovieRateForm, InsertMovieForm
-from movies.models import MovieRate, Movie
+from movies.models import MovieRate, Movie, Suggests
 from movies.task import search_movie, send_email
+
 
 
 class HomeTemplate(ListView):
@@ -140,3 +141,14 @@ class LogOutView(LogoutView):
             return redirect('login')
         logout(request)
         return super(LogOutView, self).dispatch(request, *args, **kwargs)
+
+
+class SuggestsView(FormView):
+    template_name = 'suggets.html'
+    form_class = InsertMovieForm
+    success_url = 'home'
+
+    def post(self, request, *args, **kwargs):
+        Suggests.objects.create(title=self.request.POST['name'])
+        return super(SuggestsView,self).post( request, *args, **kwargs)
+
