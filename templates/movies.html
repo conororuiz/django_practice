@@ -2,49 +2,53 @@
 <html lang="en">
 {% extends "base.html" %}
 {% block body %}
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body background="/static/movies/sala-de-cine.png" style="background-size: 101%;
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body background="/static/movies/sala-de-cine.png" style="background-size: 101%;
     padding-bottom: 2278px;">
-<div>
-<nav style="background-color: black ; ">
+    <div>
+        <nav style="background-color: black ; ">
 
-    <ul class="menu">
+            <ul class="menu">
 
-         <form class="form-inline" method="get" style="float: right">
-             <a href="{% url 'logout' %}" style="padding-right: 448px"><buton class="btn btn-outline-light">Logout</buton></a>
-             <a href="{% url 'home' %}" style="padding-right: 20px"><buton class="btn btn-outline-light">Home</buton></a>
-            <a  style="alignment: right">
-            <input  type="search" id="miBusqueda" name="title">
-            <button id="button" class="btn btn-outline-light"  type="submit">Search</button>
-            </a>
+                <form class="form-inline" method="get" style="float: right">
+                    <a href="{% url 'logout' %}" style="padding-right: 448px">
+                        <buton class="btn btn-outline-light">Logout</buton>
+                    </a>
+                    <a href="{% url 'home' %}" style="padding-right: 20px">
+                        <buton class="btn btn-outline-light">Home</buton>
+                    </a>
+                    <a style="alignment: right">
+                        <input type="search" id="miBusqueda" name="title">
+                        <button id="button" class="btn btn-outline-light" type="submit">Search</button>
+                    </a>
 
-    </form>
+                </form>
 
-    </ul>
-</nav>
-</div>
+            </ul>
+        </nav>
+    </div>
 
-<div class="table" style="padding-top: 60px">
-    {% if movies != 'no se encontraron conicidencias' %}
-     <form class="container">
-      {% for movie in movies.qs %}
-        <div style="display: inline-block">
-        <a href="{% url 'search' movie.slug %}">
-            <div style="background-image: url({{ movie.poster.url }}); width: 200px; height: 300px;background-size: cover;">
-                <div style=" top: 276px; font-family:Jamrul;  background-color: rgba(0,0,0,0.7);color: #fffffb;position: relative;">{{ movie.directors }}</div>
-            </div>
-            <h1></h1>
-        </a>
-        </div>
-        {% endfor %}
-         </form>
-    {% else %}
-        <a><h1>{{ movies }}</h1></a>
-     {% endif %}
-</div>
-</body>
+    <div class="table" style="padding-top: 60px">
+        {% if movies != 'no se encontraron conicidencias' %}
+            <form class="container">
+                {% for movie in movies.qs %}
+                    <div style="display: inline-block">
+                        <a href="{% url 'search' movie.slug %}">
+                            <div style="background-image: url({{ movie.poster.url }}); width: 200px; height: 300px;background-size: cover;">
+                                <div style=" top: 276px; font-family:Jamrul;  background-color: rgba(0,0,0,0.7);color: #fffffb;position: relative;">{{ movie.directors }}</div>
+                            </div>
+                            <h1></h1>
+                        </a>
+                    </div>
+                {% endfor %}
+            </form>
+        {% else %}
+            <a><h1>{{ movies }}</h1></a>
+        {% endif %}
+    </div>
+    </body>
 {% endblock %}
 </html>

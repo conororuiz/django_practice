@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'movies.apps.MoviesConfig',
 
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'django_celery_results'
 ]
 
 MIDDLEWARE = [
