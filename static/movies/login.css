@@ -175,6 +175,9 @@ input[type=password]::placeholder {
   color: #cccccc;
 }
 
+label.id_name{
+  color: #f6f6f6;
+}
 
 
 /* ANIMATIONS */

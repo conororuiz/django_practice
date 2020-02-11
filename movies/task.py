@@ -3,7 +3,7 @@ import smtplib
 from celery import chord, group
 from django.core import management
 from django.core.management import call_command
-from movies import local_settings
+from practica_django import local_settings
 from movies.models import Suggests
 from practica_django.celery import app
 
