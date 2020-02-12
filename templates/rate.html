@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-{% extends 'base.html' %}
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Rate Movie</title>
 </head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 {% block body %}
- <form method="post">
- {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">SAVE</button>
- </form>
+    <body background="{% static 'movies/film.jpg' %}" style="background-size: cover">
+    <div class="wrapper fadeInDown">
+        <div id="formContent" style="background-color: inherit">
+            <form method="post" style="padding-top: 13px">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-outline-light" type="submit" style="position: relative;bottom: 7px">RATE</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
 </body>
 </html>

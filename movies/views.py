@@ -21,6 +21,10 @@ from movies.task import search_movie, send_email
 
 class HomeTemplate(ListView):
     def get(self, request, *args, **kwargs):
+        try:
+            Token.objects.get(user=self.request.user.pk)
+        except:
+            return redirect('login')
         if Movie.objects.all().order_by('-id')[:10]:
             movie = Movie.objects.all().order_by('-id')[:10]
             if MovieRate.objects.get_best_rated().first():
@@ -55,6 +59,10 @@ class DetailMovieView(LoginRequiredMixin, DetailView):
     query_pk_and_slug = False
 
     def get_context_data(self, **kwargs):
+        try:
+            Token.objects.get(user=self.request.user.pk)
+        except:
+            return redirect('login')
         data = super(DetailMovieView, self).get_context_data(**kwargs)
         rate = MovieRate.objects.get_rated(self.get_object().id)
         if rate:
@@ -90,6 +98,8 @@ class MovieRateView(CreateView):
     success_url = reverse_lazy('home')
 
     def form_invalid(self, form):
+        if self.request.POST['id_rate']>5:
+            return redirect('home')
         return super(MovieRateView, self).form_invalid(form)
 
     def get_form_kwargs(self):

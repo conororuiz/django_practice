@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-{% extends "base.html" %}
-{% block body %}
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home</title>
 </head>
+{% extends "base.html" %}
+{% block body %}
 {% load static %}
 <body background="static/movies/sala-de-cine.png" style="background-size: 101%;padding-bottom: 1468px;" >
 <div>
@@ -51,7 +51,7 @@
         <div style="display: inline-block">
         <a href="{% url 'search' movie.slug %}">
             <div ><img src="{{ movie.poster.url }}" style="width: 200px;height: 300px">
-                <div style=" top: 276px; font-family:Jamrul;  background-color: rgba(0,0,0,0.7);color: #fffffb">{{ movie.directors }}</div>
+                <div style=" position:relative ; top: -25px; font-family:Jamrul;  background-color: rgba(0,0,0,0.7);color: #fffffb">{{ movie.directors }}</div>
             </div>
            <h1></h1>
 

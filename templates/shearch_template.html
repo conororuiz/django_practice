@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Movie Details</title>
 </head>
-<body>
-<table border="0" cellspacing="0" cellpadding="0">
-    <tbody>
-    <tr>
-        <td style="padding-left:0px"><img src="{{ movie.poster.url }}" alt="" width="350"
-                                          height="450" class="alignnone size-full wp-image-15649"></td>
-        <td style="text-align:justify"><p> {{ movie.detail }}</p>
-            <p>&nbsp;</p>
-            <p><span><strong>Title: </strong> {{ movie.title }}</span></p>
-            <div id="imdb-box"><strong>IMDb:</strong>
-                <div id="star-rating-box">
-                </div> &nbsp;{{ rate.rate }}
-            </div>
-            <a href="{% url 'rate' movie.slug %}">Rate this</a>
-            <br><span><strong> Genre: </strong><a>{{ movie.genre }}</a>
+{% block body %}
+    <body background="{% static 'movies/film.jpg' %}" style="background-size: cover">
+    <table border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+        <tr>
+            <td style="padding-left:0px; padding-right: 84px"><img src="{{ movie.poster.url }}" alt="" width="350"
+                                              height="450" class="alignnone size-full wp-image-15649"></td>
+            <td style="text-align:justify">
+                <div class="wrapper fadeInDown">
+                    <div id="formContent" style="background-color: inherit">
+                        <p> {{ movie.detail }}</p>
+                        <p>&nbsp;</p>
+                        <p><span><strong>Title: </strong> {{ movie.title }}</span></p>
+                        <div id="imdb-box"><strong>IMDb:</strong>
+                            <div id="star-rating-box">
+                            </div> &nbsp;{{ rate.rate }}
+                        </div>
+                        <a href="{% url 'rate' movie.slug %}">Rate this</a>
+                        <br><span><strong> Genre: </strong><a>{{ movie.genre }}</a>
             </span><br> <span><strong>Original Language: </strong>{{ movie.original_language }}</span><br>
-                <span><strong>Director: </strong>{{ movie.directors }}</span><br>
-                <span><strong>Actors: </strong><a >{{ movie.actors}}</a></span></br>
-            <span><strong>Duration: </strong><a >{{ movie.duration }} min</a></span></br>
-            <a href="{{ movie.trailer_url }}" >Trailer</a>
+                        <span><strong>Director: </strong>{{ movie.directors }}</span><br>
+                        <span><strong>Actors: </strong><a>{{ movie.actors }}</a></span></br>
+                        <span><strong>Duration: </strong><a>{{ movie.duration }} min</a></span></br>
+                        <a href="{{ movie.trailer_url }}">Trailer</a>
+                    </div>
+                </div>
 
-        </td>
-    </tr>
-    </tbody>
-</table>
-</body>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </body>
+{% endblock %}
 </html>

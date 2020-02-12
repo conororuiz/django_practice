@@ -141,6 +141,16 @@ input[type=password]:focus {
   border-bottom: 2px solid #5fbae9;
 }
 
+input[type=number]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #5fbae9;
+}
+
+input[name=comment]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #5fbae9;
+}
+
 input[type=text]::placeholder {
   color: #cccccc;
 }
