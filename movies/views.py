@@ -1,6 +1,7 @@
 from builtins import super
 from django import forms
 from celery import chain, chord, group
+from django.http import HttpResponseRedirect
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,7 +17,6 @@ from movies.filters import MovieFilter
 from movies.forms import MovieForm, MovieRateForm, InsertMovieForm
 from movies.models import MovieRate, Movie, Suggests
 from movies.task import search_movie, send_email
-
 
 
 class HomeTemplate(ListView):
@@ -97,8 +97,17 @@ class MovieRateView(CreateView):
     form_class = MovieRateForm
     success_url = reverse_lazy('home')
 
+    def form_valid(self, form):
+        if int(self.request.POST['rate']) > 5:
+            return redirect('search', self.kwargs.get("slug"))
+        try:
+            nom = MovieRate.objects.get(movie__slug=self.kwargs.get("slug"), users_id=self.request.user.pk)
+            return redirect('search', self.kwargs.get("slug"))
+        except:
+            return super(MovieRateView, self).form_valid(form)
+
     def form_invalid(self, form):
-        if self.request.POST['id_rate']>5:
+        if self.request.POST['id_rate'] > 5:
             return redirect('home')
         return super(MovieRateView, self).form_invalid(form)
 
@@ -106,6 +115,7 @@ class MovieRateView(CreateView):
         kwargs = super(MovieRateView, self).get_form_kwargs()
         kwargs.update({'user': self.request.user, 'movie': Movie.objects.get(slug=self.kwargs.get('slug'))})
         return kwargs
+
 
 class InsertMovies(FormView):
     template_name = 'create_movie.html'
@@ -160,5 +170,4 @@ class SuggestsView(FormView):
 
     def post(self, request, *args, **kwargs):
         Suggests.objects.create(title=self.request.POST['name'])
-        return super(SuggestsView,self).post( request, *args, **kwargs)
-
+        return super(SuggestsView, self).post(request, *args, **kwargs)
