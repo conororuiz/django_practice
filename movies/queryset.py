@@ -17,6 +17,7 @@ class MovieRateQueryset(QuerySet):
     def get_rated(self,pk):
         return self.values('movie').annotate(
          rate=Sum('rate') / Count('movie', output_field=FloatField())).filter(movie=pk)
+
     def get_for_movie(self, movie):
         return self.filter(movie=movie)
 

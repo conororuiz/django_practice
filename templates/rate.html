@@ -13,10 +13,20 @@
             <form method="post" style="padding-top: 13px">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button class="btn btn-outline-light" type="submit" style="position: relative;bottom: 7px">RATE</button>
+                <button id="btn" class="btn btn-outline-light" type="submit" style="position: relative;bottom: 7px">RATE</button>
             </form>
         </div>
     </div>
+
+ <script>
+    btn = document.getElementById("btn");
+    rate = document.getElementById("id_rate");
+    btn.addEventListener("click",function () {
+        if(parseInt(rate.value)>5){
+            alert("La valoracion maxima permitida es 5")
+        }
+    })
+</script>
 {% endblock %}
 </body>
 </html>

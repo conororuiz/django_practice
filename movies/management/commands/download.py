@@ -89,7 +89,7 @@ class Command(BaseCommand):
                             os.mkdir(settings.MEDIA_ROOT + "/movie/" + movie_title)
                         except:
                             exist = True
-                        if exist == False:
+                        if exist:
                             poster_name = settings.MEDIA_ROOT + "/movie/" + movie_title + "/" + movie_title + "." + ext
                             f = open(poster_name, "wb")
                             try:

@@ -17,12 +17,19 @@ from movies.filters import MovieFilter
 from movies.forms import MovieForm, MovieRateForm, InsertMovieForm
 from movies.models import MovieRate, Movie, Suggests
 from movies.task import search_movie, send_email
+import datetime
+from django.http import QueryDict
 
 
 class HomeTemplate(ListView):
     def get(self, request, *args, **kwargs):
         try:
-            Token.objects.get(user=self.request.user.pk)
+            token = Token.objects.get(user=self.request.user.pk)
+            to = token.user
+            date = str(datetime.datetime.now()).split(".")[0]
+            date = date.split(":")[1]
+            if int(date)%5 == 0:
+                token.delete()
         except:
             return redirect('login')
         if Movie.objects.all().order_by('-id')[:10]:
@@ -59,10 +66,6 @@ class DetailMovieView(LoginRequiredMixin, DetailView):
     query_pk_and_slug = False
 
     def get_context_data(self, **kwargs):
-        try:
-            Token.objects.get(user=self.request.user.pk)
-        except:
-            return redirect('login')
         data = super(DetailMovieView, self).get_context_data(**kwargs)
         rate = MovieRate.objects.get_rated(self.get_object().id)
         if rate:
