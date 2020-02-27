@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import movies.local_settings as local_settings
+import practica_django.local_settings as local_settings
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'movies.apps.MoviesConfig',
 
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'django_celery_results'
 ]
 
 MIDDLEWARE = [
