@@ -1,6 +1,7 @@
 from builtins import super
 from django import forms
 from celery import chain, chord, group
+import requests
 from django.http import HttpResponseRedirect
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import logout
@@ -174,3 +175,12 @@ class SuggestsView(FormView):
     def post(self, request, *args, **kwargs):
         Suggests.objects.create(title=self.request.POST['name'])
         return super(SuggestsView, self).post(request, *args, **kwargs)
+
+
+class HomeApiView(View):
+    def get(self, request, *args, **kwargs):
+        url = "http://127.0.0.1:8000/api/v1/movie/"
+        movies = requests.get(url)
+        movies = movies.json()
+        movies = movies['results']
+        return render(request, "home_api.html", {"movies": movies})

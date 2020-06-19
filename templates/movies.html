@@ -39,7 +39,7 @@
                 {% for movie in movies.qs %}
                     <div style="display: inline-block">
                         <a href="{% url 'search' movie.slug %}">
-                            <div><img src="{{ movie.poster.url }}" style="width: 200px;height: 300px">
+                            <div><img src="{{ movie.poster }}" style="width: 200px;height: 300px">
                                 <div style=" position:relative ; top: -25px; font-family:Jamrul;  background-color: rgba(0,0,0,0.7);color: #fffffb">{{ movie.directors }}</div>
                             </div>
                             <h1></h1>

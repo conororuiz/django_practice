@@ -25,7 +25,7 @@ class Movie(models.Model):
     title = models.CharField(max_length=200)
     duration = models.IntegerField(null=True)
     year = models.IntegerField()
-    poster = models.ImageField(max_length=200)
+    poster = models.CharField(max_length=200)
     detail = models.TextField()
     classification = models.CharField(max_length=5,choices=[("A","para todo publico"),("B","12 años en adelante"),("B15","15 años en adelante"),("C","18 años en adelante"),("D","para adultos")])
     trailer_url = models.URLField()

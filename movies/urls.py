@@ -12,5 +12,6 @@ urlpatterns = [
     path('movierate/', MovieRateListView.as_view(), name='drf-movierate-list'),
     path('movierate/<int:pk>/', MovieRateDetailView.as_view(), name='drf-movierate-detail'),
     path('logout',LogOutView.as_view(), name='logout'),
-    path('suggests',SuggestsView.as_view(), name='suggests')
+    path('suggests',SuggestsView.as_view(), name='suggests'),
+    path('movies_api/', HomeApiView.as_view(), name='home-api'),
 ]

@@ -67,7 +67,7 @@ class Command(BaseCommand):
                     dir = str(i)
                     ext = response.split(".")
                     ext = ext[len(ext) - 1]
-                    poster_name = ''
+                    poster_name = results['Poster']
                     date_release = results['Released']
                     trailer = results['Website']
                     director = results['Director']
@@ -90,15 +90,6 @@ class Command(BaseCommand):
                         except:
                             exist = True
                         if exist:
-                            poster_name = settings.MEDIA_ROOT + "/movie/" + movie_title + "/" + movie_title + "." + ext
-                            f = open(poster_name, "wb")
-                            try:
-                                response = requests.get(response)
-                                f.write(response.content)
-                            except:
-                                poster_name = "prueba"
-                            f.close()
-                            poster_name = "movie/" + movie_title + "/" + movie_title + "." + ext
                             try:
                                 actors = Actor.objects.get(name__icontains=actors)
                             except:

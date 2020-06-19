@@ -7,7 +7,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block body %}
-    <body background="static/movies/sala-de-cine.png" style="background-size: 101%;padding-bottom: 1468px;">
+    <body background="https://eloutput.com/app/uploads-eloutput.com/2020/03/cine-vacio-sillas.jpg" style="background-size: 101%;padding-bottom: 1468px;">
     <div>
         <nav style="background-color: black">
             <ul class="menu">
@@ -17,13 +17,13 @@
                             <buton class="btn btn-outline-light">Logout</buton>
                         </a>
                     </div>
-                    <a href="{% url 'suggests' %}" style="padding-right: 20px">
+                    <a href="#" style="padding-right: 20px">
                         <buton class="btn btn-outline-light">Suggests</buton>
                     </a>
                     <a href="{% url 'api-movies:movie-list' %}" style="padding-right: 20px">
                         <buton class="btn btn-outline-light">API</buton>
                     </a>
-                    <a href="{% url 'create' %}" style="padding-right: 20px">
+                    <a href="#" style="padding-right: 20px">
                         <buton class="btn btn-outline-light">Add movies</buton>
                     </a>
                     <a style="alignment: right">
@@ -36,26 +36,10 @@
             </ul>
         </nav>
     </div>
-    <div>
-        <h1 align="center">Movies</h1>
-
-        <form method="get" style="    margin-left: 350px;
-    margin-right: 328px;">
-            <center>
-                <div>
-                    <a href="{% url 'search' best_movie.slug %}" id="movie">
-                        <div style="background-image: url({{ best_movie.poster }}); width: 300px; height: 400px;background-size: cover;">
-                            <div style=" top: 0px;  background-color: rgba(0,0,0,0.7);color: #fffffb;position: relative;">
-                                Movie with most rating
-                            </div>
-                            <div style=" top: 355px; font-family:Jamrul;  background-color: rgba(0,0,0,0.7);color: #fffffb;position: relative;">{{ best_movie.directors }}</div>
-                        </div>
-                    </a>
-                </div>
-            </center>
-        </form>
-    </div>
-    <h1></h1>
+    <br>
+    <br>
+    <br>
+    <br>
     <div class="table">
         {% if movies != 'no se encontraron conicidencias' %}
             <form class="container" style="padding-left: 65px">
@@ -63,7 +47,7 @@
                     <div style="display: inline-block">
                         <a href="{% url 'search' movie.slug %}">
                             <div><img src="{{ movie.poster }}" style="width: 200px;height: 300px">
-                                <div style=" position:relative ; top: -25px; font-family:Jamrul;  background-color: rgba(0,0,0,0.7);color: #fffffb">{{ movie.directors }}</div>
+                                <div style=" position:relative ; top: -25px; font-family:Jamrul;  background-color: rgba(0,0,0,0.7);color: #fffffb; text-align: center">{{ movie.year }}</div>
                             </div>
                             <h1></h1>
 
