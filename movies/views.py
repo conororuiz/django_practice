@@ -179,7 +179,7 @@ class SuggestsView(FormView):
 
 class HomeApiView(View):
     def get(self, request, *args, **kwargs):
-        url = "http://127.0.0.1:8000/api/v1/movie/"
+        url = "http://3.136.84.142:8000/api/v1/movie/"
         movies = requests.get(url)
         movies = movies.json()
         movies = movies['results']
