@@ -14,4 +14,6 @@ urlpatterns = [
     path('logout',LogOutView.as_view(), name='logout'),
     path('suggests',SuggestsView.as_view(), name='suggests'),
     path('movies_api/', HomeApiView.as_view(), name='home-api'),
+    path('detail_movie/<movie>/', DetailMovie.as_view(), name='detail-api'),
+
 ]

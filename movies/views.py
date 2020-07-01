@@ -184,3 +184,17 @@ class HomeApiView(View):
         movies = movies.json()
         movies = movies['results']
         return render(request, "home_api.html", {"movies": movies})
+
+class DetailMovie(View):
+    def get(self, request, *args,**kwargs):
+        url = "http://127.0.0.1:8000/api/v1/movie/"
+        movies = requests.get(url)
+        movies = movies.json()
+        movies = movies['results']
+        for mov in movies:
+            movie = kwargs['movie']
+            if mov["slug"] == movie:
+                movies = requests.get(mov["id"])
+                movies = movies.json()
+                break
+        return render(request, "shearch_template.html", {"movie": movies})
